@@ -1,17 +1,19 @@
 """
 Widgets personnalisés pour l'interface graphique.
-
-Widgets selon Phase 3 de la roadmap.
 """
 
-from src.gui.widgets.timeline_widget import TimelineWidget
-from src.gui.widgets.audio_controls import AudioControlsWidget
-from src.gui.widgets.editor_panel import EditorPanel
-from src.gui.widgets.transcript_panel import TranscriptPanel
+from src.gui.widgets.audio_controls_panel import AudioControlsPanel
+from src.gui.widgets.editor import EditorPanel
+from src.gui.widgets.transcript import TranscriptPanel
+from src.gui.widgets.sidebar import SidebarWidget
+from src.gui.widgets.scrolling_transcript_timeline import ScrollingTranscriptTimeline
+from src.gui.widgets.pedal_status_badge import PedalStatusBadge
 
 __all__ = [
-    "TimelineWidget",
-    "AudioControlsWidget",
+    "AudioControlsPanel",
     "EditorPanel",
     "TranscriptPanel",
+    "SidebarWidget",
+    "ScrollingTranscriptTimeline",
+    "PedalStatusBadge",
 ]
