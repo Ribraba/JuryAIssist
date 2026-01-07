@@ -68,51 +68,8 @@ from src.transcription.word_sync import WordSynchronizer
 from src.gui.theme import get_app_stylesheet, AppSpacing
 from src.gui.resources import load_fonts, get_font
 
-
-class TranscriptionWorker(QThread):
-    """Worker thread pour transcription asynchrone."""
-
-    finished = pyqtSignal(list)  # List[TranscriptionSegment]
-    progress = pyqtSignal(int)  # Pourcentage de progression
-    error = pyqtSignal(str)  # Message d'erreur
-
-    def __init__(self, audio_path: str, model_size: str = "base", language: str = "fr"):
-        super().__init__()
-        self._audio_path = audio_path
-        self._model_size = model_size
-        self._language = language
-        self._is_stopped = False
-
-    def run(self):
-        """Exécute la transcription."""
-        try:
-            self.progress.emit(10)
-            transcriber = WhisperTranscriber(model_size=self._model_size)
-
-            if self._is_stopped:
-                return
-
-            self.progress.emit(30)
-            result = transcriber.transcribe(self._audio_path, language=self._language)
-
-            if self._is_stopped:
-                transcriber.release()
-                return
-
-            self.progress.emit(90)
-            transcriber.release()
-
-            # Convertir le résultat en liste de segments
-            segments = result.segments if result.status == TranscriptionStatus.COMPLETED else []
-            self.progress.emit(100)
-            self.finished.emit(segments)
-
-        except Exception as e:
-            self.error.emit(f"Erreur: {str(e)}")
-
-    def stop(self):
-        """Arrête le worker."""
-        self._is_stopped = True
+# Workers
+from src.gui.workers import TranscriptionWorker
 
 
 class MainWindow(QMainWindow):
