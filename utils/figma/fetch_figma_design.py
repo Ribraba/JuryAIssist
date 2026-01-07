@@ -6,8 +6,11 @@ import json
 from pathlib import Path
 
 # Configuration
-FIGMA_TOKEN = "figd_KAg1rQM6CsQmpSkulCL8avCSZBcj0d09tWqDHAxh"
-FILE_KEY = "0ieFrBWSvz46jv5zOYcW4e"
+# IMPORTANT: Ne jamais commiter le token Figma!
+# Créez un fichier .env ou utilisez une variable d'environnement
+import os
+FIGMA_TOKEN = os.getenv("FIGMA_TOKEN", "YOUR_FIGMA_TOKEN_HERE")
+FILE_KEY = os.getenv("FIGMA_FILE_KEY", "0ieFrBWSvz46jv5zOYcW4e")
 
 # Headers pour l'API
 headers = {
