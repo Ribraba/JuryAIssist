@@ -10,7 +10,7 @@ from pathlib import Path
 # Créez un fichier .env ou utilisez une variable d'environnement
 import os
 FIGMA_TOKEN = os.getenv("FIGMA_TOKEN", "YOUR_FIGMA_TOKEN_HERE")
-FILE_KEY = os.getenv("FIGMA_FILE_KEY", "0ieFrBWSvz46jv5zOYcW4e")
+FILE_KEY = os.getenv("FIGMA_FILE_KEY", "YOUR_FILE_KEY_HERE")
 
 # Headers pour l'API
 headers = {
