@@ -1,5 +1,5 @@
 """
-Fenêtre principale selon le design Figma.
+Fenêtre principale de l'application.
 
 Layout:
 +--------------------------------------------------------+
@@ -48,11 +48,11 @@ from src.audio.player import PlayerState
 from src.audio.vlc_player import VLCAudioPlayer
 from src.audio.timeline import TimeUtils
 
-# Import des widgets Figma
+# Import des widgets
 from src.gui.widgets.sidebar import SidebarWidget
 from src.gui.widgets.scrolling_transcript_timeline import ScrollingTranscriptTimeline
-from src.gui.widgets.figma_editor_panel import FigmaEditorPanel
-from src.gui.widgets.figma_audio_controls import FigmaAudioControls
+from src.gui.widgets.editor import EditorPanel
+from src.gui.widgets.audio_controls_panel import AudioControlsPanel
 from src.gui.widgets.pedal_status_badge import PedalStatusBadge
 
 # Pédale
@@ -64,9 +64,9 @@ from src.transcription.whisper_transcriber import WhisperTranscriber
 from src.transcription.transcriber import TranscriptionSegment, TranscriptionStatus
 from src.transcription.word_sync import WordSynchronizer
 
-# Styles
-from src.gui.figma_styles import get_figma_stylesheet, FigmaSpacing
-from src.gui.figma_resources import load_fonts, get_font
+# Styles et ressources
+from src.gui.theme import get_app_stylesheet, AppSpacing
+from src.gui.resources import load_fonts, get_font
 
 
 class TranscriptionWorker(QThread):
@@ -155,7 +155,7 @@ class MainWindow(QMainWindow):
         self.resize(1440, 960)  # Taille du design Figma
 
         # Appliquer le style global
-        self.setStyleSheet(get_figma_stylesheet())
+        self.setStyleSheet(get_app_stylesheet())
 
         # Créer l'interface
         self._create_ui()
@@ -189,8 +189,8 @@ class MainWindow(QMainWindow):
         # 2. Zone de contenu principale (droite)
         content_widget = QWidget()
         content_layout = QVBoxLayout(content_widget)
-        content_layout.setContentsMargins(FigmaSpacing.MD, FigmaSpacing.MD, FigmaSpacing.MD, FigmaSpacing.MD)
-        content_layout.setSpacing(FigmaSpacing.MD)
+        content_layout.setContentsMargins(AppSpacing.MD, AppSpacing.MD, AppSpacing.MD, AppSpacing.MD)
+        content_layout.setSpacing(AppSpacing.MD)
 
         # 2a. Badge de pédale (en haut à droite)
         pedal_container = QWidget()
@@ -202,7 +202,7 @@ class MainWindow(QMainWindow):
         content_layout.addWidget(pedal_container)
 
         # 2b. Panneau d'édition (PREND TOUT L'ESPACE)
-        self._editor_panel = FigmaEditorPanel()
+        self._editor_panel = EditorPanel()
         content_layout.addWidget(self._editor_panel, 1)  # Prend tout l'espace disponible
 
         # 2c. Timeline avec transcription défilante cliquable (EN BAS, au-dessus des contrôles audio)
@@ -217,7 +217,7 @@ class MainWindow(QMainWindow):
         content_layout.addWidget(lecture_label)
 
         # 2d. Contrôles audio (tout en bas)
-        self._audio_controls = FigmaAudioControls()
+        self._audio_controls = AudioControlsPanel()
         content_layout.addWidget(self._audio_controls)
 
         main_layout.addWidget(content_widget, 1)

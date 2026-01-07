@@ -13,8 +13,8 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QLabel
 
-from src.gui.figma_resources import get_icon, get_font
-from src.gui.figma_styles import FigmaSpacing
+from src.gui.resources import get_icon, get_font
+from src.gui.theme import AppSpacing
 
 
 class PedalStatusBadge(QWidget):
@@ -41,12 +41,12 @@ class PedalStatusBadge(QWidget):
         # Layout
         layout = QHBoxLayout(self)
         layout.setContentsMargins(
-            FigmaSpacing.SM,
-            FigmaSpacing.XS,
-            FigmaSpacing.SM,
-            FigmaSpacing.XS
+            AppSpacing.SM,
+            AppSpacing.XS,
+            AppSpacing.SM,
+            AppSpacing.XS
         )
-        layout.setSpacing(FigmaSpacing.XS)
+        layout.setSpacing(AppSpacing.XS)
 
         # Icône
         self._icon_label = QLabel()

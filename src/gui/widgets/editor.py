@@ -13,11 +13,11 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QTextEdit, QGraphicsDropShadowEffect
 from PyQt5.QtGui import QColor
 
-from src.gui.figma_resources import get_font
-from src.gui.figma_styles import FigmaSpacing, FigmaColors
+from src.gui.resources import get_font
+from src.gui.theme import AppSpacing, AppColors
 
 
-class FigmaEditorPanel(QWidget):
+class EditorPanel(QWidget):
     """
     Panneau d'édition selon le design Figma.
 
@@ -49,7 +49,7 @@ class FigmaEditorPanel(QWidget):
         # Layout principal
         main_layout = QVBoxLayout(self)
         main_layout.setContentsMargins(0, 0, 0, 0)
-        main_layout.setSpacing(FigmaSpacing.MD)
+        main_layout.setSpacing(AppSpacing.MD)
 
         # En-tête
         self._create_header(main_layout)
@@ -67,15 +67,15 @@ class FigmaEditorPanel(QWidget):
         header_widget = QWidget()
         header_widget.setObjectName("sectionHeader")
         header_layout = QVBoxLayout(header_widget)
-        header_layout.setContentsMargins(FigmaSpacing.MD, FigmaSpacing.MD, FigmaSpacing.MD, 0)
-        header_layout.setSpacing(FigmaSpacing.SM)
+        header_layout.setContentsMargins(AppSpacing.MD, AppSpacing.MD, AppSpacing.MD, 0)
+        header_layout.setSpacing(AppSpacing.SM)
 
         # Titre principal (nom du fichier)
         self._title_label = QLabel(self._filename)
         self._title_label.setObjectName("sectionTitle")
         self._title_label.setFont(get_font(34, 600))
         self._title_label.setStyleSheet(f"""
-            color: {FigmaColors.TEXT_PRIMARY};
+            color: {AppColors.TEXT_PRIMARY};
             letter-spacing: -0.68px;
         """)
         header_layout.addWidget(self._title_label)
@@ -84,7 +84,7 @@ class FigmaEditorPanel(QWidget):
         subtitle_label = QLabel("Édition")
         subtitle_label.setObjectName("sectionSubtitle")
         subtitle_label.setFont(get_font(16, 400))
-        subtitle_label.setStyleSheet(f"color: {FigmaColors.TEXT_SECONDARY};")
+        subtitle_label.setStyleSheet(f"color: {AppColors.TEXT_SECONDARY};")
         header_layout.addWidget(subtitle_label)
 
         layout.addWidget(header_widget)
@@ -102,11 +102,11 @@ class FigmaEditorPanel(QWidget):
         self._text_edit.setFont(get_font(24, 500))
         self._text_edit.setStyleSheet(f"""
             QTextEdit {{
-                background-color: {FigmaColors.BG_PRIMARY};
+                background-color: {AppColors.BG_PRIMARY};
                 border: none;
-                color: {FigmaColors.TEXT_PRIMARY};
+                color: {AppColors.TEXT_PRIMARY};
                 letter-spacing: -0.48px;
-                padding: {FigmaSpacing.MD}px;
+                padding: {AppSpacing.MD}px;
             }}
         """)
 

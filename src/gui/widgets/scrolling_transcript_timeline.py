@@ -18,8 +18,8 @@ from PyQt5.QtGui import QPainter, QColor, QFont, QPen, QFontMetrics
 from PyQt5.QtWidgets import QWidget
 
 from src.transcription.transcriber import TranscriptionSegment
-from src.gui.figma_styles import FigmaColors
-from src.gui.figma_resources import get_font
+from src.gui.theme import AppColors
+from src.gui.resources import get_font
 
 
 class ScrollingTranscriptTimeline(QWidget):
@@ -63,9 +63,9 @@ class ScrollingTranscriptTimeline(QWidget):
         self._opacity_fade_distance = 5  # Nombre de mots pour le dégradé
 
         # Couleurs
-        self._bg_color = QColor(FigmaColors.BG_TIMELINE)
+        self._bg_color = QColor(AppColors.BG_TIMELINE)
         self._progress_color = QColor("#000000")  # Noir au lieu de bleu
-        self._text_color = QColor(FigmaColors.TEXT_PRIMARY)
+        self._text_color = QColor(AppColors.TEXT_PRIMARY)
 
         # Police
         self._font = get_font(20, 500)

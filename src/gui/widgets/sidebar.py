@@ -30,8 +30,8 @@ from PyQt5.QtWidgets import (
     QFrame,
 )
 
-from src.gui.figma_resources import get_icon, get_font
-from src.gui.figma_styles import FigmaSpacing
+from src.gui.resources import get_icon, get_font
+from src.gui.theme import AppSpacing
 
 
 class SidebarWidget(QWidget):
@@ -67,8 +67,8 @@ class SidebarWidget(QWidget):
 
         # Layout principal
         main_layout = QVBoxLayout(self)
-        main_layout.setContentsMargins(FigmaSpacing.MD, FigmaSpacing.MD, FigmaSpacing.MD, FigmaSpacing.MD)
-        main_layout.setSpacing(FigmaSpacing.LG)
+        main_layout.setContentsMargins(AppSpacing.MD, AppSpacing.MD, AppSpacing.MD, AppSpacing.MD)
+        main_layout.setSpacing(AppSpacing.LG)
 
         # 1. Titre de l'app
         self._create_title(main_layout)
@@ -108,7 +108,7 @@ class SidebarWidget(QWidget):
         search_container = QWidget()
         search_layout = QHBoxLayout(search_container)
         search_layout.setContentsMargins(0, 0, 0, 0)
-        search_layout.setSpacing(FigmaSpacing.SM)
+        search_layout.setSpacing(AppSpacing.SM)
 
         # Icône de recherche
         search_icon_label = QLabel()
@@ -153,7 +153,7 @@ class SidebarWidget(QWidget):
         self._transcripts_container.setStyleSheet("background-color: transparent;")
         self._transcripts_layout = QVBoxLayout(self._transcripts_container)
         self._transcripts_layout.setContentsMargins(0, 0, 0, 0)
-        self._transcripts_layout.setSpacing(FigmaSpacing.XS)
+        self._transcripts_layout.setSpacing(AppSpacing.XS)
 
         # Button group pour les radio buttons
         self._file_button_group = QButtonGroup(self)
@@ -226,8 +226,8 @@ class SidebarWidget(QWidget):
 
         # Layout horizontal pour icône + texte
         btn_layout = QHBoxLayout(btn)
-        btn_layout.setContentsMargins(FigmaSpacing.SM, 2, FigmaSpacing.SM, 2)
-        btn_layout.setSpacing(FigmaSpacing.XS)  # Espacement réduit entre icône et texte
+        btn_layout.setContentsMargins(AppSpacing.SM, 2, AppSpacing.SM, 2)
+        btn_layout.setSpacing(AppSpacing.XS)  # Espacement réduit entre icône et texte
 
         # Icône
         icon_label = QLabel()
@@ -268,8 +268,8 @@ class SidebarWidget(QWidget):
         file_widget = QWidget()
         file_widget.setFixedHeight(40)  # Hauteur fixe comme dans Figma
         file_layout = QHBoxLayout(file_widget)
-        file_layout.setContentsMargins(FigmaSpacing.SM, FigmaSpacing.SM, FigmaSpacing.SM, FigmaSpacing.SM)
-        file_layout.setSpacing(FigmaSpacing.SM)
+        file_layout.setContentsMargins(AppSpacing.SM, AppSpacing.SM, AppSpacing.SM, AppSpacing.SM)
+        file_layout.setSpacing(AppSpacing.SM)
 
         # Radio button (icône)
         radio_icon_label = QLabel()

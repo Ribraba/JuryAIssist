@@ -1,5 +1,5 @@
 """
-Gestion des ressources Figma (polices, icônes).
+Gestion des ressources de l'application (polices, icônes).
 
 Principe SOLID:
 - Single Responsibility: Gère uniquement le chargement des ressources
@@ -11,16 +11,16 @@ from PyQt5.QtGui import QIcon, QFontDatabase, QFont
 from PyQt5.QtWidgets import QApplication
 
 
-class FigmaResourceManager:
+class ResourceManager:
     """
-    Gestionnaire centralisé des ressources du design Figma.
+    Gestionnaire centralisé des ressources de l'application.
 
     Responsabilités:
     - Charger les icônes SVG
     - Gérer les polices (Inter avec fallback)
     """
 
-    _instance: Optional['FigmaResourceManager'] = None
+    _instance: Optional['ResourceManager'] = None
     _icons_loaded = False
     _font_loaded = False
 
@@ -139,7 +139,7 @@ class FigmaResourceManager:
 
 
 # Instance globale
-_resource_manager = FigmaResourceManager()
+_resource_manager = ResourceManager()
 
 
 def get_icon(name: str) -> QIcon:

@@ -1,7 +1,7 @@
 """
-Contrôles audio redesignés selon Figma.
+Panneau de contrôles audio de l'application.
 
-Layout selon le design Figma:
+Layout:
 - Bouton Play/Pause (grand, circulaire) en HAUT
 - Boutons Skip backward, Stop, Skip forward en BAS (horizontalement alignés)
 - Volume, temps et vitesse à droite
@@ -24,11 +24,11 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtGui import QIcon
 
-from src.gui.figma_resources import get_icon, get_font
-from src.gui.figma_styles import FigmaSpacing, FigmaColors
+from src.gui.resources import get_icon, get_font
+from src.gui.theme import AppSpacing, AppColors
 
 
-class FigmaAudioControls(QWidget):
+class AudioControlsPanel(QWidget):
     """
     Contrôles audio selon le design Figma.
 
@@ -65,8 +65,8 @@ class FigmaAudioControls(QWidget):
 
         # Layout principal (horizontal)
         main_layout = QHBoxLayout(self)
-        main_layout.setContentsMargins(FigmaSpacing.MD, FigmaSpacing.SM, FigmaSpacing.MD, FigmaSpacing.SM)
-        main_layout.setSpacing(FigmaSpacing.LG)
+        main_layout.setContentsMargins(AppSpacing.MD, AppSpacing.SM, AppSpacing.MD, AppSpacing.SM)
+        main_layout.setSpacing(AppSpacing.LG)
 
         # 1. Boutons de contrôle (gauche) - Layout vertical
         self._create_control_buttons(main_layout)
@@ -78,13 +78,13 @@ class FigmaAudioControls(QWidget):
         self._create_volume_control(main_layout)
 
         # Spacer
-        main_layout.addSpacing(FigmaSpacing.LG)
+        main_layout.addSpacing(AppSpacing.LG)
 
         # 3. Temps (centre)
         self._create_time_display(main_layout)
 
         # Spacer
-        main_layout.addSpacing(FigmaSpacing.LG)
+        main_layout.addSpacing(AppSpacing.LG)
 
         # 4. Vitesse (droite)
         self._create_speed_control(main_layout)
@@ -104,7 +104,7 @@ class FigmaAudioControls(QWidget):
         buttons_container = QWidget()
         buttons_layout = QVBoxLayout(buttons_container)
         buttons_layout.setContentsMargins(0, 0, 0, 0)
-        buttons_layout.setSpacing(FigmaSpacing.XS)
+        buttons_layout.setSpacing(AppSpacing.XS)
 
         # Ligne 1: Bouton Play/Pause (grand, centré)
         play_pause_container = QWidget()
@@ -127,7 +127,7 @@ class FigmaAudioControls(QWidget):
         small_buttons_container = QWidget()
         small_buttons_layout = QHBoxLayout(small_buttons_container)
         small_buttons_layout.setContentsMargins(0, 0, 0, 0)
-        small_buttons_layout.setSpacing(FigmaSpacing.XS)
+        small_buttons_layout.setSpacing(AppSpacing.XS)
 
         # Skip backward
         self._skip_back_btn = self._create_icon_button("skip_backward", 16)
@@ -181,7 +181,7 @@ class FigmaAudioControls(QWidget):
             layout: Layout parent
         """
         volume_layout = QHBoxLayout()
-        volume_layout.setSpacing(FigmaSpacing.SM)
+        volume_layout.setSpacing(AppSpacing.SM)
 
         # Icône volume
         volume_icon_btn = QPushButton()
@@ -219,7 +219,7 @@ class FigmaAudioControls(QWidget):
         self._time_label = QLabel("00:00 / 00:00")
         self._time_label.setObjectName("timeLabel")
         self._time_label.setFont(get_font(15, 400))
-        self._time_label.setStyleSheet(f"color: {FigmaColors.TEXT_SECONDARY};")
+        self._time_label.setStyleSheet(f"color: {AppColors.TEXT_SECONDARY};")
         layout.addWidget(self._time_label)
 
     def _create_speed_control(self, layout: QHBoxLayout):
@@ -232,7 +232,7 @@ class FigmaAudioControls(QWidget):
         self._speed_label = QLabel("1.0x")
         self._speed_label.setObjectName("speedLabel")
         self._speed_label.setFont(get_font(16, 400))
-        self._speed_label.setStyleSheet(f"color: {FigmaColors.TEXT_PRIMARY};")
+        self._speed_label.setStyleSheet(f"color: {AppColors.TEXT_PRIMARY};")
         self._speed_label.setCursor(Qt.PointingHandCursor)
         self._speed_label.mousePressEvent = self._on_speed_clicked
         layout.addWidget(self._speed_label)

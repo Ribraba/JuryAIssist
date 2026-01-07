@@ -22,11 +22,11 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QTextCursor, QTextCharFormat, QColor
 
 from src.transcription.transcriber import TranscriptionSegment
-from src.gui.figma_resources import get_font
-from src.gui.figma_styles import FigmaSpacing, FigmaColors
+from src.gui.resources import get_font
+from src.gui.theme import AppSpacing, AppColors
 
 
-class FigmaTranscriptPanel(QWidget):
+class TranscriptPanel(QWidget):
     """
     Panneau de transcription brute selon le design Figma.
 
@@ -57,7 +57,7 @@ class FigmaTranscriptPanel(QWidget):
         # Layout principal
         main_layout = QVBoxLayout(self)
         main_layout.setContentsMargins(0, 0, 0, 0)
-        main_layout.setSpacing(FigmaSpacing.MD)
+        main_layout.setSpacing(AppSpacing.MD)
 
         # En-tête
         self._create_header(main_layout)
@@ -75,15 +75,15 @@ class FigmaTranscriptPanel(QWidget):
         header_widget = QWidget()
         header_widget.setObjectName("sectionHeader")
         header_layout = QVBoxLayout(header_widget)
-        header_layout.setContentsMargins(FigmaSpacing.MD, FigmaSpacing.MD, FigmaSpacing.MD, 0)
-        header_layout.setSpacing(FigmaSpacing.SM)
+        header_layout.setContentsMargins(AppSpacing.MD, AppSpacing.MD, AppSpacing.MD, 0)
+        header_layout.setSpacing(AppSpacing.SM)
 
         # Titre principal
         title_label = QLabel("Transcription brute")
         title_label.setObjectName("sectionTitle")
         title_label.setFont(get_font(34, 600))
         title_label.setStyleSheet(f"""
-            color: {FigmaColors.TEXT_PRIMARY};
+            color: {AppColors.TEXT_PRIMARY};
             letter-spacing: -0.68px;
         """)
         header_layout.addWidget(title_label)
@@ -92,7 +92,7 @@ class FigmaTranscriptPanel(QWidget):
         subtitle_label = QLabel("Lecture")
         subtitle_label.setObjectName("sectionSubtitle")
         subtitle_label.setFont(get_font(16, 400))
-        subtitle_label.setStyleSheet(f"color: {FigmaColors.TEXT_SECONDARY};")
+        subtitle_label.setStyleSheet(f"color: {AppColors.TEXT_SECONDARY};")
         header_layout.addWidget(subtitle_label)
 
         layout.addWidget(header_widget)
@@ -111,11 +111,11 @@ class FigmaTranscriptPanel(QWidget):
         self._text_edit.setFont(get_font(20, 500))
         self._text_edit.setStyleSheet(f"""
             QTextEdit {{
-                background-color: {FigmaColors.BG_PRIMARY};
+                background-color: {AppColors.BG_PRIMARY};
                 border: none;
-                color: {FigmaColors.TEXT_PRIMARY};
+                color: {AppColors.TEXT_PRIMARY};
                 letter-spacing: -0.4px;
-                padding: {FigmaSpacing.MD}px;
+                padding: {AppSpacing.MD}px;
             }}
         """)
 
@@ -169,7 +169,7 @@ class FigmaTranscriptPanel(QWidget):
         cursor = self._text_edit.textCursor()
         cursor.select(QTextCursor.Document)
         fmt = QTextCharFormat()
-        fmt.setBackground(QColor(FigmaColors.BG_PRIMARY))
+        fmt.setBackground(QColor(AppColors.BG_PRIMARY))
         cursor.setCharFormat(fmt)
 
         # Surligner le nouveau segment
