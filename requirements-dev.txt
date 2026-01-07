@@ -1,0 +1,36 @@
+# ============================================================================
+# Development Requirements
+# ============================================================================
+
+# D'abord, installer les dépendances de base
+-r requirements.txt
+
+# ============================================================================
+# Testing
+# ============================================================================
+pytest>=7.0.0
+pytest-qt>=4.2.0        # Tests PyQt
+pytest-cov>=4.0.0       # Couverture de code
+pytest-mock>=3.10.0     # Mocking facilité
+pytest-timeout>=2.1.0   # Timeout pour tests
+
+# ============================================================================
+# Code Quality
+# ============================================================================
+black>=23.0.0           # Formatage automatique
+pylint>=2.17.0          # Linter
+mypy>=1.0.0             # Vérification de types
+flake8>=6.0.0           # Linter additionnel
+isort>=5.12.0           # Tri des imports
+
+# ============================================================================
+# Documentation
+# ============================================================================
+sphinx>=6.0.0           # Génération de documentation
+sphinx-rtd-theme>=1.2.0 # Thème Read the Docs
+
+# ============================================================================
+# Development Tools
+# ============================================================================
+ipython>=8.0.0          # REPL amélioré
+ipdb>=0.13.0            # Debugger interactif

@@ -1,0 +1,68 @@
+[tool.black]
+line-length = 100
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # Répertoires à exclure
+  \.git
+  | \.venv
+  | venv
+  | \.pytest_cache
+  | __pycache__
+  | htmlcov
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+skip_glob = ["venv/*", ".venv/*"]
+
+[tool.pylint.main]
+max-line-length = 100
+disable = [
+    "C0111",  # missing-docstring (on le gère avec des commentaires clairs)
+    "R0903",  # too-few-public-methods (OK pour dataclasses et interfaces)
+    "W0212",  # protected-access (OK pour tests)
+]
+
+[tool.pylint.format]
+max-line-length = 100
+
+[tool.pylint.design]
+max-args = 7
+max-attributes = 10
+max-locals = 15
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false  # False pour Phase 1, True en Phase 6
+ignore_missing_imports = true
+check_untyped_defs = true
+
+# Strictness (à activer progressivement)
+# disallow_any_generics = true
+# disallow_untyped_calls = true
+# disallow_incomplete_defs = true
+# warn_redundant_casts = true
+# warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = "vlc.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "hid.*"
+ignore_missing_imports = true
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
