@@ -172,7 +172,7 @@ class MainWindow(QMainWindow):
         self._pedal_detect_timer.start()
 
     def _create_ui(self):
-        """Crée l'interface utilisateur selon le design Figma."""
+        """Crée l'interface utilisateur."""
         # Widget central
         central = QWidget()
         self.setCentralWidget(central)
@@ -530,8 +530,8 @@ class MainWindow(QMainWindow):
             "<h3>JuryAIssist</h3>"
             "<p>Application d'assistance à la transcription et à l'édition "
             "d'enregistrements audio pour juristes.</p>"
-            "<p><b>Version:</b> 2.0 (Interface Figma)</p>"
-            "<p><b>Design:</b> Figma Integration</p>"
+            "<p><b>Version:</b> 2.0</p>"
+            "<p><b>Interface:</b> Moderne et intuitive</p>"
             "<p>Développé avec PyQt5 et les principes SOLID</p>"
         )
 
