@@ -93,7 +93,7 @@ class AudioPlayer(ft.Container):
                 ft.dropdown.Option("1.5x"),
                 ft.dropdown.Option("2.0x"),
             ],
-            on_change=self._on_speed_change,
+            on_select=self._on_speed_change,
             text_size=AppFonts.BODY_SM,
         )
         self.volume_slider = ft.Slider(
