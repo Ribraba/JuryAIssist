@@ -119,7 +119,7 @@ class TranscriptionView(ft.Container):
         Returns:
             Container représentant le segment
         """
-        timestamp_str = TimeUtils.format_time(segment.start)
+        timestamp_str = TimeUtils.seconds_to_timestamp(segment.start)
 
         # Déterminer si c'est le segment actuel
         is_active = (

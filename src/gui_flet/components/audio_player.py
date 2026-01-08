@@ -318,6 +318,6 @@ class AudioPlayer(ft.Container):
 
     def _update_time_label(self):
         """Met à jour le label de temps."""
-        current = TimeUtils.format_time(self.current_position)
-        total = TimeUtils.format_time(self.total_duration)
+        current = TimeUtils.seconds_to_timestamp(self.current_position)
+        total = TimeUtils.seconds_to_timestamp(self.total_duration)
         self.time_label.value = f"{current} / {total}"
