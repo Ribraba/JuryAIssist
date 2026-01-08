@@ -1,32 +1,30 @@
 """
-Point d'entrée de l'application JuryAIssist.
+Point d'entrée de l'application JuryAIssist avec Flet.
 
-Lance l'interface graphique complète avec lecteur audio et transcription.
+Lance l'interface graphique moderne et minimaliste.
 """
-
-import sys
-
-from PyQt5.QtWidgets import QApplication
-
-from src.gui.main_window import MainWindow
+import flet as ft
+from src.gui_flet.main_window import MainWindow
 
 
-def main():
-    """Lance l'application."""
-    # Créer l'application Qt
-    app = QApplication(sys.argv)
+def main(page: ft.Page):
+    """
+    Point d'entrée de l'application Flet.
 
-    # Configurer le nom de l'application
-    app.setApplicationName("JuryAIssist")
-    app.setOrganizationName("JuryAIssist")
+    Args:
+        page: Page Flet
+    """
+    # Créer la fenêtre principale
+    app = MainWindow(page)
 
-    # Créer et afficher la fenêtre principale
-    window = MainWindow()
-    window.show()
+    # Gérer la fermeture propre
+    def on_window_event(e):
+        if e.data == "close":
+            app.cleanup()
 
-    # Lancer la boucle d'événements
-    sys.exit(app.exec_())
+    page.on_window_event = on_window_event
 
 
 if __name__ == "__main__":
-    main()
+    # Lancer l'application Flet
+    ft.app(target=main)
