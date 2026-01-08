@@ -27,4 +27,4 @@ def main(page: ft.Page):
 
 if __name__ == "__main__":
     # Lancer l'application Flet
-    ft.app(target=main)
+    ft.app(target=main, view=ft.AppView.FLET_APP)

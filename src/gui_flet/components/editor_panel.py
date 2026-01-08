@@ -81,7 +81,7 @@ class EditorPanel(ft.Container):
                         ft.Row(
                             [
                                 ft.Icon(
-                                    ft.icons.DESCRIPTION_OUTLINED,
+                                    "description",
                                     size=28,
                                     color=AppColors.PRIMARY,
                                 ),
@@ -96,12 +96,12 @@ class EditorPanel(ft.Container):
                         # Boutons d'export
                         self._create_export_button(
                             "TXT",
-                            ft.icons.TEXT_SNIPPET_OUTLINED,
+                            "text_snippet",
                             lambda _: self.on_export_txt(self.get_text()) if self.on_export_txt else None,
                         ),
                         self._create_export_button(
                             "DOCX",
-                            ft.icons.ARTICLE_OUTLINED,
+                            "article",
                             lambda _: self.on_export_docx(self.get_text()) if self.on_export_docx else None,
                         ),
                     ],

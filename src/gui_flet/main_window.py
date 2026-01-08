@@ -152,7 +152,7 @@ class MainWindow:
     def _build_header(self) -> ft.Container:
         """Construit l'en-tête avec le badge de pédale."""
         pedal_status = "Pédale connectée" if self.pedal and self.pedal.is_connected() else "Pédale non détectée"
-        pedal_icon = ft.icons.CHECK_CIRCLE if self.pedal and self.pedal.is_connected() else ft.icons.CIRCLE_OUTLINED
+        pedal_icon = "check_circle" if self.pedal and self.pedal.is_connected() else "circle"
         pedal_color = AppColors.SUCCESS if self.pedal and self.pedal.is_connected() else AppColors.TEXT_TERTIARY
 
         return ft.Container(

@@ -133,18 +133,18 @@ class AudioPlayer(ft.Container):
                         ft.Row(
                             [
                                 self._create_control_button(
-                                    ft.icons.REPLAY_5_ROUNDED,
+                                    "replay_5",
                                     lambda _: self.on_skip_backward() if self.on_skip_backward else None,
                                     "Reculer 5s",
                                 ),
                                 self.play_pause_btn,
                                 self._create_control_button(
-                                    ft.icons.FORWARD_5_ROUNDED,
+                                    "forward_5",
                                     lambda _: self.on_skip_forward() if self.on_skip_forward else None,
                                     "Avancer 5s",
                                 ),
                                 self._create_control_button(
-                                    ft.icons.STOP_ROUNDED,
+                                    "stop",
                                     lambda _: self.on_stop() if self.on_stop else None,
                                     "Stop",
                                 ),
@@ -159,7 +159,7 @@ class AudioPlayer(ft.Container):
                         ft.Row(
                             [
                                 ft.Icon(
-                                    ft.icons.SPEED_ROUNDED,
+                                    "speed",
                                     size=20,
                                     color=AppColors.TEXT_SECONDARY,
                                 ),
@@ -172,7 +172,7 @@ class AudioPlayer(ft.Container):
                         ft.Row(
                             [
                                 ft.Icon(
-                                    ft.icons.VOLUME_UP_ROUNDED,
+                                    "volume_up",
                                     size=20,
                                     color=AppColors.TEXT_SECONDARY,
                                 ),
@@ -191,7 +191,7 @@ class AudioPlayer(ft.Container):
         """Crée le bouton Play/Pause principal."""
         return ft.Container(
             content=ft.Icon(
-                ft.icons.PLAY_ARROW_ROUNDED,
+                "play_arrow",
                 size=32,
                 color=AppColors.SURFACE,
             ),
@@ -250,7 +250,7 @@ class AudioPlayer(ft.Container):
 
     def _update_play_pause_icon(self):
         """Met à jour l'icône Play/Pause."""
-        icon_name = ft.icons.PAUSE_ROUNDED if self.is_playing else ft.icons.PLAY_ARROW_ROUNDED
+        icon_name = "pause" if self.is_playing else "play_arrow"
         self.play_pause_btn.content = ft.Icon(
             icon_name,
             size=32,

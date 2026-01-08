@@ -101,7 +101,7 @@ class Sidebar(ft.Container):
             content=ft.Row(
                 [
                     ft.Icon(
-                        ft.icons.WORKSPACE_PREMIUM_ROUNDED,
+                        "gavel",
                         size=32,
                         color=AppColors.PRIMARY,
                     ),
@@ -133,7 +133,7 @@ class Sidebar(ft.Container):
             content=ft.Row(
                 [
                     ft.Icon(
-                        ft.icons.ADD_CIRCLE_OUTLINE_ROUNDED,
+                        "add_circle_outline",
                         size=20,
                         color=AppColors.PRIMARY,
                     ),
@@ -159,7 +159,7 @@ class Sidebar(ft.Container):
             content=ft.Row(
                 [
                     ft.Icon(
-                        ft.icons.SETTINGS_OUTLINED,
+                        "settings",
                         size=20,
                         color=AppColors.TEXT_SECONDARY,
                     ),
@@ -215,7 +215,7 @@ class Sidebar(ft.Container):
             content=ft.Row(
                 [
                     ft.Icon(
-                        ft.icons.AUDIOTRACK_ROUNDED,
+                        "audiotrack",
                         size=18,
                         color=icon_color,
                     ),
