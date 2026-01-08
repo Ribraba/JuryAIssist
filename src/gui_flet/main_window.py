@@ -43,34 +43,38 @@ class MainWindow:
 
         # Test 2: Zone de contenu simple
         content = ft.Container(
-            content=ft.Column([
-                ft.Text("Zone de contenu", size=20),
-                ft.Container(
-                    content=ft.TextField(
-                        multiline=True,
-                        min_lines=10,
-                        hint_text="La transcription apparaîtra ici...",
-                        border_color=ft.Colors.GREY_300,
+            content=ft.Column(
+                [
+                    ft.Text("Zone de contenu", size=20),
+                    ft.Container(
+                        content=ft.TextField(
+                            multiline=True,
+                            min_lines=10,
+                            hint_text="La transcription apparaîtra ici...",
+                            border_color=ft.Colors.GREY_300,
+                            expand=True,  # Prend toute la largeur
+                        ),
+                        bgcolor=ft.Colors.WHITE,
+                        padding=20,
+                        border_radius=12,
+                        expand=True,  # Prend tout l'espace vertical disponible
                     ),
-                    bgcolor=ft.Colors.WHITE,
-                    padding=20,
-                    border_radius=12,
-                    expand=True,  # Prend tout l'espace vertical disponible
-                ),
-                ft.Container(height=20),
-                ft.Container(
-                    content=ft.Row([
-                        ft.Text("⏮️", size=24),
-                        ft.Text("▶️", size=32),
-                        ft.Text("⏭️", size=24),
-                        ft.Text("⏹️", size=24),
-                    ], alignment=ft.MainAxisAlignment.CENTER),
-                    bgcolor=ft.Colors.WHITE,
-                    padding=20,
-                    border_radius=12,
-                    height=80,
-                ),
-            ]),
+                    ft.Container(height=20),
+                    ft.Container(
+                        content=ft.Row([
+                            ft.Text("⏮️", size=24),
+                            ft.Text("▶️", size=32),
+                            ft.Text("⏭️", size=24),
+                            ft.Text("⏹️", size=24),
+                        ], alignment=ft.MainAxisAlignment.CENTER),
+                        bgcolor=ft.Colors.WHITE,
+                        padding=20,
+                        border_radius=12,
+                        height=80,
+                    ),
+                ],
+                expand=True,  # La colonne prend toute la hauteur
+            ),
             padding=20,
             expand=True,  # Prend tout l'espace horizontal disponible
         )
