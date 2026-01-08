@@ -148,7 +148,7 @@ class Sidebar(ft.Container):
             ),
             padding=AppSpacing.SM,
             border_radius=AppBorderRadius.SM,
-            bgcolor=ft.colors.BLUE_50,
+            bgcolor=ft.Colors.BLUE_50,
             ink=True,
             on_click=lambda _: self.on_import_clicked() if self.on_import_clicked else None,
         )
@@ -207,7 +207,7 @@ class Sidebar(ft.Container):
         Returns:
             Container représentant le fichier
         """
-        bg_color = ft.colors.BLUE_50 if selected else None
+        bg_color = ft.Colors.BLUE_50 if selected else None
         text_color = AppColors.PRIMARY if selected else AppColors.TEXT_PRIMARY
         icon_color = AppColors.PRIMARY if selected else AppColors.TEXT_SECONDARY
 

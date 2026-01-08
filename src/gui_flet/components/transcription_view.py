@@ -126,7 +126,7 @@ class TranscriptionView(ft.Container):
             segment.start <= self.current_position < segment.end
         )
 
-        bg_color = ft.colors.BLUE_50 if is_active else None
+        bg_color = ft.Colors.BLUE_50 if is_active else None
         text_color = AppColors.PRIMARY if is_active else AppColors.TEXT_PRIMARY
 
         return ft.Container(
