@@ -24,10 +24,15 @@ class AppSettings:
         volume: Volume audio (0-100)
         playback_speed: Vitesse de lecture (0.5-2.0)
         preferred_language: Langue préférée pour la transcription
-        preferred_model: Modèle Whisper préféré
+        preferred_model: Modèle Whisper préféré (tiny, base, small, medium, large)
         window_width: Largeur de la fenêtre
         window_height: Hauteur de la fenêtre
         last_audio_directory: Dernier répertoire d'ouverture de fichier
+        dark_mode: Mode sombre activé (True) ou clair (False)
+        pedal_button_1: Action du bouton 1 de la pédale
+        pedal_button_2: Action du bouton 2 de la pédale
+        pedal_button_3: Action du bouton 3 de la pédale
+        pedal_button_4: Action du bouton 4 de la pédale
     """
 
     volume: int = 70
@@ -37,6 +42,13 @@ class AppSettings:
     window_width: int = 1440
     window_height: int = 960
     last_audio_directory: str = str(Path.home())
+    dark_mode: bool = False
+
+    # Configuration pédale (actions par défaut - correspond à ButtonActionMapper.DEFAULT_RS31_MAPPING)
+    pedal_button_1: str = "skip_forward"   # Bouton 1 physique (droite)
+    pedal_button_2: str = "play_pause"     # Bouton 2 physique (centre)
+    pedal_button_3: str = "skip_backward"  # Bouton 3 physique (gauche)
+    pedal_button_4: str = "stop"           # Bouton 4
 
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire."""

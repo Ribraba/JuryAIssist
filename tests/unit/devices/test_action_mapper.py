@@ -14,40 +14,43 @@ class TestButtonActionMapper:
     """Tests pour ButtonActionMapper."""
 
     def test_default_mapping(self):
-        """Test mapping par défaut RS-31."""
+        """Test mapping par défaut RS-31 selon ButtonActionMapper.DEFAULT_RS31_MAPPING."""
         mapper = ButtonActionMapper()
 
-        assert mapper.get_action(1) == PedalAction.SKIP_BACKWARD
+        assert mapper.get_action(1) == PedalAction.SKIP_FORWARD
         assert mapper.get_action(2) == PedalAction.PLAY_PAUSE
-        assert mapper.get_action(3) == PedalAction.SKIP_FORWARD
+        assert mapper.get_action(3) == PedalAction.SKIP_BACKWARD
         assert mapper.get_action(4) == PedalAction.STOP
 
     def test_physical_button_mapping(self):
         """
         Test que le mapping correspond à la disposition physique de la pédale.
 
-        Disposition physique RS-31:
-        [BTN 1: gauche] [BTN 2: centre] [BTN 3: droite] [BTN 4]
+        Selon action_mapper.py ligne 21:
+        "Le bouton physique de gauche est le bouton 3, celui de droite est le bouton 1"
 
-        Fonctions attendues:
-        - Bouton gauche (1) → Reculer
-        - Bouton centre (2) → Play/Pause
-        - Bouton droit (3) → Avancer
+        Disposition physique RS-31:
+        [BTN 3: gauche] [BTN 2: centre] [BTN 1: droite] [BTN 4]
+
+        Fonctions attendues (DEFAULT_RS31_MAPPING):
+        - Bouton 1 (physique droite) → Avancer (SKIP_FORWARD)
+        - Bouton 2 (physique centre) → Play/Pause
+        - Bouton 3 (physique gauche) → Reculer (SKIP_BACKWARD)
         - Bouton 4 → Stop
         """
         mapper = ButtonActionMapper()
 
-        # Bouton physique gauche (1) = Reculer
-        assert mapper.get_action(1) == PedalAction.SKIP_BACKWARD, \
-            "Le bouton gauche (1) doit reculer de 5s"
+        # Bouton 1 (physique droite) = Avancer
+        assert mapper.get_action(1) == PedalAction.SKIP_FORWARD, \
+            "Le bouton 1 (physique droite) doit avancer de 5s"
 
-        # Bouton physique centre (2) = Play/Pause
+        # Bouton 2 (physique centre) = Play/Pause
         assert mapper.get_action(2) == PedalAction.PLAY_PAUSE, \
             "Le bouton central (2) doit faire play/pause"
 
-        # Bouton physique droit (3) = Avancer
-        assert mapper.get_action(3) == PedalAction.SKIP_FORWARD, \
-            "Le bouton droit (3) doit avancer de 5s"
+        # Bouton 3 (physique gauche) = Reculer
+        assert mapper.get_action(3) == PedalAction.SKIP_BACKWARD, \
+            "Le bouton 3 (physique gauche) doit reculer de 5s"
 
         # Bouton 4 = Stop
         assert mapper.get_action(4) == PedalAction.STOP, \
@@ -102,12 +105,12 @@ class TestButtonActionMapper:
 
         assert isinstance(mapping, dict)
         assert len(mapping) == 4
-        assert mapping[1] == PedalAction.SKIP_BACKWARD
+        assert mapping[1] == PedalAction.SKIP_FORWARD
         assert mapping[2] == PedalAction.PLAY_PAUSE
 
         # Vérifier que c'est une copie (pas la référence)
         mapping[1] = PedalAction.STOP
-        assert mapper.get_action(1) == PedalAction.SKIP_BACKWARD
+        assert mapper.get_action(1) == PedalAction.SKIP_FORWARD
 
     def test_reset_to_default(self):
         """Test réinitialisation au mapping par défaut."""
@@ -120,8 +123,8 @@ class TestButtonActionMapper:
         # Réinitialiser
         mapper.reset_to_default()
 
-        # Vérifier que c'est revenu au défaut
-        assert mapper.get_action(1) == PedalAction.SKIP_BACKWARD
+        # Vérifier que c'est revenu au défaut (DEFAULT_RS31_MAPPING)
+        assert mapper.get_action(1) == PedalAction.SKIP_FORWARD
         assert mapper.get_action(2) == PedalAction.PLAY_PAUSE
 
 

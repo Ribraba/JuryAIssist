@@ -71,6 +71,12 @@ from src.gui.resources import load_fonts, get_font
 # Workers
 from src.gui.workers import TranscriptionWorker
 
+# Configuration
+from src.config import get_settings
+
+# Dialogs
+from src.gui.dialogs import SettingsDialog, AboutDialog
+
 
 class MainWindow(QMainWindow):
     """
@@ -85,6 +91,9 @@ class MainWindow(QMainWindow):
 
         # Charger les polices personnalisées
         load_fonts()
+
+        # Charger les paramètres
+        self.settings = get_settings()
 
         # État
         self._current_audio_file: Optional[str] = None
@@ -107,12 +116,21 @@ class MainWindow(QMainWindow):
         self._pedal_detect_timer.setInterval(2000)  # Vérifier toutes les 2 secondes
 
         # Configuration de la fenêtre
-        self.setWindowTitle("JuryAIssist - Transcription Audio Juridique (Figma Design)")
+        self.setWindowTitle("JuryAIssist - Transcription Audio Juridique")
         self.setMinimumSize(1200, 800)
-        self.resize(1440, 960)  # Taille du design Figma
 
-        # Appliquer le style global
-        self.setStyleSheet(get_app_stylesheet())
+        # Restaurer la taille depuis les paramètres
+        window_width = self.settings.get("window_width", 1440)
+        window_height = self.settings.get("window_height", 960)
+        self.resize(window_width, window_height)
+
+        # Appliquer le style global (selon le paramètre dark_mode)
+        dark_mode = self.settings.get("dark_mode", False)
+        if dark_mode:
+            from src.gui.theme import get_app_stylesheet_dark
+            self.setStyleSheet(get_app_stylesheet_dark())
+        else:
+            self.setStyleSheet(get_app_stylesheet())
 
         # Créer l'interface
         self._create_ui()
@@ -122,11 +140,52 @@ class MainWindow(QMainWindow):
         # Connecter les signaux
         self._connect_signals()
 
+        # Restaurer les paramètres audio
+        self._restore_audio_settings()
+
         # Tenter de connecter la pédale au démarrage
         self._init_pedal()
 
         # Démarrer le timer de détection de pédale
         self._pedal_detect_timer.start()
+
+    def _restore_audio_settings(self):
+        """Restaure les paramètres audio depuis les settings."""
+        # Restaurer le volume
+        volume = self.settings.get("volume", 70)
+        self._controller.set_volume(volume)
+        self._audio_controls.set_volume(volume)
+
+        # Restaurer la vitesse
+        speed = self.settings.get("playback_speed", 1.0)
+        self._controller.set_speed(speed)
+        self._audio_controls.set_speed(speed)
+
+    def closeEvent(self, event):
+        """Sauvegarde les paramètres avant de fermer."""
+        # Sauvegarder la taille de la fenêtre
+        self.settings.set("window_width", self.width())
+        self.settings.set("window_height", self.height())
+
+        # Sauvegarder le volume et la vitesse actuels
+        self.settings.set("volume", self._controller.get_volume())
+        self.settings.set("playback_speed", self._controller.get_speed())
+
+        # Sauvegarder sur disque
+        self.settings.save()
+
+        # Nettoyer
+        if self._transcription_worker and self._transcription_worker.isRunning():
+            self._transcription_worker.stop()
+            self._transcription_worker.wait()
+
+        if self._controller:
+            self._controller.release()
+
+        if self._pedal:
+            self._pedal.disconnect()
+
+        event.accept()
 
     def _create_ui(self):
         """Crée l'interface utilisateur."""
@@ -251,6 +310,18 @@ class MainWindow(QMainWindow):
         play_pause_shortcut.triggered.connect(self._controller.toggle_play_pause)
         self.addAction(play_pause_shortcut)
 
+        # Flèche droite = Avancer de 5 secondes
+        skip_forward_shortcut = QAction(self)
+        skip_forward_shortcut.setShortcut(Qt.Key_Right)
+        skip_forward_shortcut.triggered.connect(lambda: self._controller.skip_forward(5.0))
+        self.addAction(skip_forward_shortcut)
+
+        # Flèche gauche = Reculer de 5 secondes
+        skip_backward_shortcut = QAction(self)
+        skip_backward_shortcut.setShortcut(Qt.Key_Left)
+        skip_backward_shortcut.triggered.connect(lambda: self._controller.skip_backward(5.0))
+        self.addAction(skip_backward_shortcut)
+
     def _connect_signals(self):
         """Connecte tous les signaux."""
         # === Sidebar ===
@@ -281,7 +352,9 @@ class MainWindow(QMainWindow):
         self._controller.state_changed.connect(self._on_state_changed)
 
         # === Timeline (transcription cliquable) → Audio ===
-        self._timeline.word_clicked.connect(self._on_word_clicked)
+        # TEMPORAIREMENT DÉSACTIVÉ: peut causer des crashs
+        # TODO: Réactiver quand la synchronisation mot-timestamp sera stable
+        # self._timeline.word_clicked.connect(self._on_word_clicked)
 
     def _load_file(self):
         """Charge un fichier audio."""
@@ -335,10 +408,9 @@ class MainWindow(QMainWindow):
             )
             return
 
-        # Pour simplifier, utiliser les paramètres par défaut
-        # TODO: Ajouter une boîte de dialogue de configuration
-        model_size = "base"
-        language = "fr"
+        # Utiliser les paramètres sauvegardés
+        model_size = self.settings.get("preferred_model", "base")
+        language = self.settings.get("preferred_language", "fr")
 
         # Créer le worker de transcription
         self._transcription_worker = TranscriptionWorker(
@@ -412,10 +484,44 @@ class MainWindow(QMainWindow):
 
     def _show_settings(self):
         """Affiche les paramètres."""
+        dialog = SettingsDialog(self)
+        dialog.settings_changed.connect(self._on_settings_changed)
+        dialog.exec_()
+
+    def _on_settings_changed(self):
+        """Appelé quand les paramètres sont modifiés."""
+        # Recharger les paramètres
+        self.settings = get_settings()
+
+        # Appliquer le nouveau thème si le mode sombre a changé
+        dark_mode = self.settings.get("dark_mode", False)
+        if dark_mode:
+            from src.gui.theme import get_app_stylesheet_dark
+            self.setStyleSheet(get_app_stylesheet_dark())
+        else:
+            self.setStyleSheet(get_app_stylesheet())
+
+        # Reconfigurer la pédale si elle est connectée
+        if self._pedal and self._pedal_connected:
+            # Créer un nouveau mapper avec les nouveaux paramètres
+            new_mapper = self._create_pedal_mapper()
+            # Mettre à jour le mapper de la pédale
+            # Note: ButtonActionMapper n'expose pas de méthode pour changer le mapper
+            # après initialisation, donc on devra reconnecter la pédale
+            # Pour l'instant, informer l'utilisateur
+            needs_restart = True
+        else:
+            needs_restart = False
+
+        # Informer l'utilisateur
+        message = "Les paramètres ont été sauvegardés.\n\n"
+        if dark_mode or needs_restart:
+            message += "Note: Redémarrez l'application pour appliquer tous les changements."
+
         QMessageBox.information(
             self,
-            "Paramètres",
-            "Fonctionnalité de paramètres à implémenter."
+            "Paramètres sauvegardés",
+            message
         )
 
     def _export_txt(self):
@@ -520,30 +626,32 @@ class MainWindow(QMainWindow):
         # Passer directement au contrôleur (0-100)
         self._controller.set_volume(volume)
 
-    def _on_word_clicked(self, word: str, position: int):
+    def _on_word_clicked(self, word: str, timestamp: float):
         """
-        Appelé quand l'utilisateur clique sur un mot dans la transcription brute.
+        Appelé quand l'utilisateur clique sur un mot dans la timeline.
 
         Args:
             word: Mot cliqué
-            position: Position du mot dans le texte
+            timestamp: Timestamp du mot en secondes (émis par ScrollingTranscriptTimeline)
         """
         if not self._current_transcript:
             return
 
-        # Chercher le mot à la position exacte cliquée
-        word_timestamp = self._word_sync.find_word_at_position(position)
-
-        if word_timestamp is not None:
-            # Faire le seek vers ce timestamp
-            self._controller.seek(word_timestamp.start_time)
+        # Le timestamp est directement fourni par la timeline, pas besoin de chercher
+        # Faire le seek vers ce timestamp
+        self._controller.seek(timestamp)
 
     # === Pédale ===
 
     def _init_pedal(self):
         """Détecte et connecte la pédale (silencieux si absente)."""
         try:
-            self._pedal = OlympusPedal()
+            # Créer un mapper personnalisé basé sur les paramètres
+            from src.devices.action_mapper import ButtonActionMapper
+            mapper = self._create_pedal_mapper()
+
+            # Créer la pédale avec le mapper personnalisé
+            self._pedal = OlympusPedal(mapper=mapper)
             if self._pedal.detect() and self._pedal.connect():
                 self._pedal_connected = True
                 self._connect_pedal_signals()
@@ -554,6 +662,34 @@ class MainWindow(QMainWindow):
             pass
         except Exception as e:
             print(f"⚠️ Erreur pédale: {e}")
+
+    def _create_pedal_mapper(self):
+        """
+        Crée un ActionMapper basé sur les paramètres sauvegardés.
+
+        Returns:
+            ButtonActionMapper configuré selon les préférences utilisateur
+        """
+        from src.devices.action_mapper import ButtonActionMapper
+
+        # Charger les actions depuis les paramètres
+        button_mapping = {}
+        for button_num in range(1, 5):
+            action_str = self.settings.get(f"pedal_button_{button_num}", None)
+            if action_str:
+                # Convertir la string en PedalAction
+                try:
+                    action = PedalAction(action_str)
+                    button_mapping[button_num] = action
+                except ValueError:
+                    # Valeur invalide, utiliser le défaut
+                    pass
+
+        # Créer le mapper (avec defaults si mapping vide)
+        if button_mapping:
+            return ButtonActionMapper(initial_mapping=button_mapping)
+        else:
+            return ButtonActionMapper()  # Utilise les defaults
 
     def _check_pedal_connection(self):
         """Vérifie périodiquement si une pédale est connectée."""
@@ -575,7 +711,11 @@ class MainWindow(QMainWindow):
             self._pedal.action_triggered.connect(self._on_pedal_action)
 
     def _on_pedal_action(self, action: PedalAction):
-        """Gère les actions de la pédale."""
+        """
+        Gère les actions de la pédale.
+
+        Le mapping action → commande se fait ici en fonction des paramètres.
+        """
         if action == PedalAction.PLAY_PAUSE:
             self._controller.toggle_play_pause()
         elif action == PedalAction.SKIP_FORWARD:
