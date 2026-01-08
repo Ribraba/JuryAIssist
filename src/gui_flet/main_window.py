@@ -148,6 +148,7 @@ class MainWindow:
         )
 
         self.page.add(main_row)
+        self.page.update()
 
     def _build_header(self) -> ft.Container:
         """Construit l'en-tête avec le badge de pédale."""
