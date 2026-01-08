@@ -1,11 +1,11 @@
 """
-Fenêtre principale de l'application Flet - Version fonctionnelle simplifiée.
+Version simplifiée de MainWindow pour déboguer.
 """
 import flet as ft
 from src.gui_flet.theme import AppColors, AppSpacing
 
-class MainWindow:
-    """Fenêtre principale de l'application."""
+class MainWindowSimple:
+    """Version simplifiée pour déboguer."""
 
     def __init__(self, page: ft.Page):
         self.page = page
@@ -37,7 +37,6 @@ class MainWindow:
             width=280,
             bgcolor=ft.Colors.WHITE,
             padding=20,
-            expand=False,  # Ne pas étendre verticalement
         )
         print("✓ Sidebar créée")
 
@@ -46,33 +45,23 @@ class MainWindow:
             content=ft.Column([
                 ft.Text("Zone de contenu", size=20),
                 ft.Container(
-                    content=ft.TextField(
-                        multiline=True,
-                        min_lines=10,
-                        hint_text="La transcription apparaîtra ici...",
-                        border_color=ft.Colors.GREY_300,
-                    ),
+                    content=ft.Text("Éditeur de transcription", size=14),
                     bgcolor=ft.Colors.WHITE,
                     padding=20,
                     border_radius=12,
-                    expand=True,  # Prend tout l'espace vertical disponible
+                    height=200,
                 ),
                 ft.Container(height=20),
                 ft.Container(
-                    content=ft.Row([
-                        ft.Text("⏮️", size=24),
-                        ft.Text("▶️", size=32),
-                        ft.Text("⏭️", size=24),
-                        ft.Text("⏹️", size=24),
-                    ], alignment=ft.MainAxisAlignment.CENTER),
+                    content=ft.Text("Lecteur audio", size=14),
                     bgcolor=ft.Colors.WHITE,
                     padding=20,
                     border_radius=12,
-                    height=80,
+                    height=100,
                 ),
             ]),
             padding=20,
-            expand=True,  # Prend tout l'espace horizontal disponible
+            expand=True,
         )
         print("✓ Content créé")
 
@@ -80,7 +69,6 @@ class MainWindow:
         main_row = ft.Row(
             [sidebar, content],
             spacing=0,
-            expand=True,  # Prend toute la hauteur de la page
         )
         print("✓ Main row créé")
 
