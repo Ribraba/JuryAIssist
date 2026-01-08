@@ -102,10 +102,11 @@ class MainWindow:
         self.page.theme = get_theme()
         self.page.bgcolor = AppColors.BACKGROUND
         self.page.padding = 0
-        self.page.window_width = 1440
-        self.page.window_height = 960
-        self.page.window_min_width = 1200
-        self.page.window_min_height = 800
+        # Utiliser les nouvelles propriétés window
+        self.page.window.width = 1440
+        self.page.window.height = 960
+        self.page.window.min_width = 1200
+        self.page.window.min_height = 800
 
     def _build_ui(self):
         """Construit l'interface utilisateur."""
