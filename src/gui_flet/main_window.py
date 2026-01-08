@@ -166,8 +166,8 @@ class MainWindow:
                     ),
                 ],
                 spacing=AppSpacing.XS,
+                alignment=ft.MainAxisAlignment.END,
             ),
-            alignment=ft.alignment.center_right,
         )
 
     def _connect_signals(self):

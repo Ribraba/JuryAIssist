@@ -199,7 +199,7 @@ class AudioPlayer(ft.Container):
             height=56,
             border_radius=AppBorderRadius.FULL,
             bgcolor=AppColors.PRIMARY,
-            alignment=ft.alignment.center,
+            alignment=ft.alignment.Alignment(0, 0),
             ink=True,
             on_click=self._on_play_pause_click,
         )
@@ -232,7 +232,7 @@ class AudioPlayer(ft.Container):
             border_radius=AppBorderRadius.FULL,
             bgcolor=AppColors.SURFACE,
             border=ft.border.all(1, AppColors.BORDER),
-            alignment=ft.alignment.center,
+            alignment=ft.alignment.Alignment(0, 0),
             ink=True,
             on_click=on_click,
             tooltip=tooltip,
