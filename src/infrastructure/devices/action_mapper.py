@@ -6,7 +6,8 @@ Permet de configurer les actions associées à chaque bouton.
 
 from typing import Dict
 
-from src.devices.pedal import IActionMapper, PedalAction
+from src.domain.devices.interfaces import IActionMapper
+from src.domain.devices.entities import PedalAction
 
 
 class ButtonActionMapper(IActionMapper):

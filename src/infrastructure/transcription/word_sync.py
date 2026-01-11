@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from typing import List, Dict, Tuple, Optional
 import re
 
-from src.transcription.transcriber import TranscriptionSegment
+from src.domain.transcription.entities import TranscriptionSegment
 
 
 @dataclass

@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Optional, List, Dict, Any
 from datetime import datetime
 
-from src.transcription.transcriber import TranscriptionSegment
+from src.domain.transcription.entities import TranscriptionSegment
 
 
 class TranscriptCache:

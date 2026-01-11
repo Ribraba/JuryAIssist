@@ -11,7 +11,8 @@ try:
 except ImportError:
     hid = None
 
-from src.devices.pedal import IPedalDetector, PedalInfo
+from src.domain.devices.interfaces import IPedalDetector
+from src.domain.devices.entities import PedalInfo
 
 
 class OlympusPedalDetector(IPedalDetector):

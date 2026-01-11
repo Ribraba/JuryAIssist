@@ -6,7 +6,8 @@ Implémentation du parsing des données HID brutes.
 
 from typing import Dict, Tuple
 
-from src.devices.pedal import IEventParser, ButtonEvent
+from src.domain.devices.interfaces import IEventParser
+from src.domain.devices.entities import ButtonEvent
 
 
 class RS31EventParser(IEventParser):
