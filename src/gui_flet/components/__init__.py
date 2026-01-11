@@ -1,3 +1,0 @@
-"""
-Composants réutilisables Flet.
-"""

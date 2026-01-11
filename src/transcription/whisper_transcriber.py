@@ -178,11 +178,12 @@ class WhisperTranscriber(ITranscriber):
         if full_result.status == TranscriptionStatus.ERROR:
             return full_result
 
-        # Filtrer les segments dans l'intervalle [start, end]
+        # Filtrer les segments qui intersectent l'intervalle [start, end]
+        # Un segment intersecte si: seg.start < end ET seg.end > start
         filtered_segments = [
             seg
             for seg in full_result.segments
-            if seg.start >= start and seg.end <= end
+            if seg.start < end and seg.end > start
         ]
 
         # Reconstruire le texte complet des segments filtrés

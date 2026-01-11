@@ -12,7 +12,7 @@ Architecture SOLID :
 
 from typing import Optional
 
-from PyQt5.QtCore import QObject, QTimer, pyqtSignal
+from PySide6.QtCore import QObject, QTimer, Signal
 
 from .player import IAudioPlayer, PlayerState
 from .source import IAudioSource, FileAudioSource
@@ -38,13 +38,13 @@ class AudioController(QObject):
     """
 
     # Signaux Qt
-    position_changed = pyqtSignal(float)  # Position en secondes
-    state_changed = pyqtSignal(object)  # PlayerState
-    duration_changed = pyqtSignal(float)  # Durée en secondes
-    source_loaded = pyqtSignal(str)  # Nom de la source
-    speed_changed = pyqtSignal(float)  # Vitesse (0.5 - 2.0)
-    volume_changed = pyqtSignal(int)  # Volume (0 - 100)
-    error_occurred = pyqtSignal(str)  # Message d'erreur
+    position_changed = Signal(float)  # Position en secondes
+    state_changed = Signal(object)  # PlayerState
+    duration_changed = Signal(float)  # Durée en secondes
+    source_loaded = Signal(str)  # Nom de la source
+    speed_changed = Signal(float)  # Vitesse (0.5 - 2.0)
+    volume_changed = Signal(int)  # Volume (0 - 100)
+    error_occurred = Signal(str)  # Message d'erreur
 
     def __init__(self, player: IAudioPlayer, update_interval: int = 100):
         """

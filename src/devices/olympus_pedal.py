@@ -6,7 +6,7 @@ Intègre tous les composants (détection, lecture, parsing, mapping) dans une cl
 
 from typing import Optional
 
-from PyQt5.QtCore import QObject, QThread, pyqtSignal
+from PySide6.QtCore import QObject, QThread, Signal
 
 from src.devices.pedal import (
     IPedalDetector,
@@ -29,7 +29,7 @@ class PedalReaderThread(QThread):
     Principe SOLID-S : Responsabilité unique = gérer le thread de lecture
     """
 
-    event_received = pyqtSignal(ButtonEvent)
+    event_received = Signal(ButtonEvent)
 
     def __init__(self, reader: HIDReader):
         """
@@ -84,12 +84,12 @@ class OlympusPedal(QObject):
         error: Émis en cas d'erreur (str)
     """
 
-    action_triggered = pyqtSignal(PedalAction)
-    button_pressed = pyqtSignal(int)  # button_number
-    button_released = pyqtSignal(int)  # button_number
-    connected = pyqtSignal()
-    disconnected = pyqtSignal()
-    error = pyqtSignal(str)
+    action_triggered = Signal(PedalAction)
+    button_pressed = Signal(int)  # button_number
+    button_released = Signal(int)  # button_number
+    connected = Signal()
+    disconnected = Signal()
+    error = Signal(str)
 
     def __init__(
         self,
