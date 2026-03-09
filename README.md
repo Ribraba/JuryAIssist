@@ -1,8 +1,8 @@
-# 🎙️ Logiciel de Transcription Audio Juridique
+# Logiciel de Transcription Audio Juridique
 
 Interface graphique pour assistantes juridiques permettant la transcription efficace d'enregistrements audio avec synchronisation texte-audio et contrôle par pédale.
 
-## 📋 Prérequis
+## Prérequis
 
 - **Python 3.9+** (testé avec Python 3.13.3)
 - **VLC Media Player** (installé sur le système)
@@ -12,7 +12,7 @@ Interface graphique pour assistantes juridiques permettant la transcription effi
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ### Option 1 : Installation automatique (Recommandé)
 
@@ -93,7 +93,7 @@ pip install -r requirements-dev.txt
 
 ---
 
-## 🔧 Test de la Pédale Olympus
+## Test de la Pédale Olympus
 
 Avant de commencer le développement, testez votre pédale :
 
@@ -217,7 +217,7 @@ JuryAIssist/
 
 ---
 
-## 🧪 Lancer les Tests
+## Lancer les Tests
 
 ```bash
 # Activer l'environnement
@@ -250,7 +250,7 @@ pytest -m "not hardware"  # Tous sauf ceux nécessitant hardware
 
 ---
 
-## 🎯 État du Projet
+## État du Projet
 
 **Version actuelle**: 2.1.0 (2026-01-05)
 **Statut**: ✅ APPLICATION COMPLÈTE ET PRODUCTION-READY
@@ -301,7 +301,7 @@ pytest -m "not hardware"  # Tous sauf ceux nécessitant hardware
 - [x] Navigation par clic sur mot
 - [x] Workflow complet opérationnel
 
-### 📊 Statistiques
+### Statistiques
 
 - **134 tests** (100% passent)
 - **~5200 lignes de code**
@@ -310,7 +310,7 @@ pytest -m "not hardware"  # Tous sauf ceux nécessitant hardware
 
 ---
 
-## 💻 Commandes Utiles
+## Commandes Utiles
 
 ```bash
 # Activer l'environnement
@@ -334,7 +334,7 @@ python -m src.main
 
 ---
 
-## 🚀 Prochaines Étapes
+## Prochaines Étapes
 
 L'application est **complète et fonctionnelle**. Pour les améliorations possibles, consultez:
 
@@ -347,7 +347,7 @@ L'application est **complète et fonctionnelle**. Pour les améliorations possib
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 ### 📖 Index Complet
 ➡️ **[docs/INDEX.md](docs/INDEX.md)** - Index complet de toute la documentation
@@ -390,7 +390,7 @@ Chaque nouvelle fonctionnalité doit :
 
 ## 📧 Contact
 
-[À définir]
+Ibrahim HADJ-ARAB
 
 ---
 
